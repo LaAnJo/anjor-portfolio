@@ -87,6 +87,30 @@ function Icon({ name }) {
           />
         </svg>
       );
+    case "menu":
+      return (
+        <svg {...common}>
+          <path
+            d="M4 7h16M4 12h16M4 17h16"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            opacity=".95"
+          />
+        </svg>
+      );
+    case "x":
+      return (
+        <svg {...common}>
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            opacity=".95"
+          />
+        </svg>
+      );
     default:
       return null;
   }
@@ -134,6 +158,8 @@ export default function App() {
   useInViewReveal();
 
   const [active, setActive] = useState("top");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const sections = useMemo(
     () => [
       { id: "top", label: "Home" },
@@ -162,8 +188,33 @@ export default function App() {
     return () => window.removeEventListener("scroll", handler);
   }, [sections]);
 
-  const repoName = "anjor-portfolio"; // used for resume link base on GitHub Pages
+  // close mobile menu on resize to desktop
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 980) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
+  const repoName = "anjor-portfolio";
   const resumeHref = `/${repoName}/resume.pdf`;
+
+  const goTo = (id) => {
+    setMobileOpen(false);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="app">
@@ -174,13 +225,14 @@ export default function App() {
 
       <nav className="nav">
         <div className="navInner">
-          <a className="brand" href="#top">
+          <a className="brand" href="#top" onClick={() => goTo("top")}>
             <span className="brandIcon">
               <Icon name="spark" />
             </span>
             <span>LaAnJo</span>
           </a>
 
+          {/* desktop links */}
           <div className="navLinks">
             {sections.map((s) => (
               <a
@@ -206,7 +258,71 @@ export default function App() {
               <Icon name="github" /> GitHub
             </a>
           </div>
+
+          {/* mobile menu button */}
+          <button
+            className="menuBtn"
+            aria-label="Open menu"
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            <Icon name={mobileOpen ? "x" : "menu"} />
+          </button>
         </div>
+
+        {/* mobile drawer */}
+        <div className={`mobileSheet ${mobileOpen ? "open" : ""}`}>
+          <div className="mobileSheetInner">
+            <div className="mobileLinks">
+              {sections.map((s) => (
+                <button
+                  key={s.id}
+                  className={`mobileLink ${active === s.id ? "on" : ""}`}
+                  onClick={() => goTo(s.id)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="mobileCtas">
+              <a
+                className="btn primary"
+                href={resumeHref}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Resume
+              </a>
+              <a
+                className="btn"
+                href="https://linkedin.com/in/anjorlatne"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn
+              </a>
+              <a className="btn" href="mailto:lataneanjor6@gmail.com">
+                <Icon name="mail" /> Email
+              </a>
+              <a
+                className="btn"
+                href="https://github.com/LaAnJo"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Icon name="github" /> GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* backdrop */}
+        <div
+          className={`sheetBackdrop ${mobileOpen ? "open" : ""}`}
+          onClick={() => setMobileOpen(false)}
+          aria-hidden
+        />
       </nav>
 
       <header id="top" className="hero">
@@ -313,13 +429,21 @@ export default function App() {
             </div>
 
             <div className="miniRow">
-              <a className="mini" href="#projects">
+              <a
+                className="mini"
+                href="#projects"
+                onClick={(e) => (e.preventDefault(), goTo("projects"))}
+              >
                 <span className="miniIcon">
                   <Icon name="spark" />
                 </span>
                 See Projects
               </a>
-              <a className="mini" href="#contact">
+              <a
+                className="mini"
+                href="#contact"
+                onClick={(e) => (e.preventDefault(), goTo("contact"))}
+              >
                 <span className="miniIcon">
                   <Icon name="mail" />
                 </span>

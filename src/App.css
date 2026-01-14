@@ -9,7 +9,6 @@
   --accent2: #8affd6;
   --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
 
-  /* layout vars */
   --container-max: 1600px;
   --container-pad: 28px;
   --nav-h: 64px;
@@ -23,20 +22,17 @@ html {
   scroll-behavior: smooth;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* FIX: prevent right-gap overflow */
-  background: var(--bg); /* FIX: remove white edge */
+  overflow-x: hidden;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
-  /* FIX: full-page background always visible */
   min-height: 100vh;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-
   background: radial-gradient(
       1200px 800px at 18% 0%,
       rgba(122, 167, 255, 0.28),
@@ -53,15 +49,13 @@ body {
       transparent 60%
     ),
     var(--bg);
-
   color: var(--text);
 }
 
 #root {
-  min-height: 100vh; /* FIX: avoids bottom white space */
+  min-height: 100vh;
   width: 100%;
-  overflow-x: hidden; /* FIX: protects against any child overflow */
-  background: transparent;
+  overflow-x: hidden;
 }
 
 a {
@@ -76,16 +70,15 @@ a:hover {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  overflow-x: hidden; /* FIX: hard stop right-side gap */
+  overflow-x: hidden;
 }
 
 /* animated blobs */
 .bgBlob {
   position: absolute;
-  inset: auto;
   width: 560px;
   height: 560px;
-  max-width: 100vw; /* FIX: prevent overflow */
+  max-width: 100vw;
   border-radius: 999px;
   filter: blur(44px);
   opacity: 0.22;
@@ -97,10 +90,9 @@ a:hover {
   left: -200px;
   top: 80px;
   background: rgba(122, 167, 255, 0.9);
-  animation-delay: 0s;
 }
 .b2 {
-  right: -140px; /* FIX: reduce right overflow (was -240px) */
+  right: -140px;
   top: 160px;
   background: rgba(138, 255, 214, 0.85);
   animation-delay: 1.4s;
@@ -127,7 +119,7 @@ a:hover {
 .nav {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 60;
   backdrop-filter: blur(12px);
   background: linear-gradient(
     180deg,
@@ -157,7 +149,6 @@ a:hover {
   gap: 10px;
   align-items: center;
   color: var(--text);
-  text-decoration: none;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -186,6 +177,7 @@ a:hover {
   border-radius: 12px;
   color: var(--muted);
   border: 1px solid transparent;
+  white-space: nowrap;
 }
 
 .navLink:hover {
@@ -206,6 +198,88 @@ a:hover {
   align-items: center;
 }
 
+/* mobile menu button */
+.menuBtn {
+  display: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 10px 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* mobile sheet */
+.sheetBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 70;
+}
+.sheetBackdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileSheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--nav-h);
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 80;
+}
+.mobileSheet.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mobileSheetInner {
+  margin: 0 auto;
+  max-width: var(--container-max);
+  padding: 12px var(--container-pad) 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 11, 22, 0.92),
+    rgba(7, 11, 22, 0.75)
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.mobileLinks {
+  display: grid;
+  gap: 8px;
+  padding: 6px 0 12px;
+}
+
+.mobileLink {
+  text-align: left;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font-size: 14px;
+}
+.mobileLink.on {
+  background: rgba(122, 167, 255, 0.16);
+  border-color: rgba(122, 167, 255, 0.28);
+}
+
+.mobileCtas {
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+}
+
 /* buttons */
 .btn {
   display: inline-flex;
@@ -219,14 +293,12 @@ a:hover {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
-
 .btn:hover {
   transform: translateY(-1px);
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.18);
   text-decoration: none;
 }
-
 .btn.primary {
   background: linear-gradient(
     135deg,
@@ -235,7 +307,6 @@ a:hover {
   );
   border-color: rgba(122, 167, 255, 0.35);
 }
-
 .btn.ghost {
   background: rgba(255, 255, 255, 0.02);
   box-shadow: none;
@@ -246,7 +317,7 @@ a:hover {
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 22px var(--container-pad) 10px; /* FIX: reduces top padding */
+  padding: 22px var(--container-pad) 10px;
   min-height: calc(100vh - var(--nav-h));
   display: flex;
   align-items: center;
@@ -260,25 +331,6 @@ a:hover {
   align-items: start;
 }
 
-@media (max-width: 980px) {
-  .hero {
-    min-height: auto;
-    align-items: stretch;
-  }
-  .heroInner {
-    grid-template-columns: 1fr;
-  }
-  .navCtas {
-    display: none;
-  }
-}
-
-@media (max-width: 560px) {
-  :root {
-    --container-pad: 16px;
-  }
-}
-
 .kicker {
   display: inline-flex;
   align-items: center;
@@ -289,7 +341,6 @@ a:hover {
   background: rgba(255, 255, 255, 0.03);
   color: var(--muted);
 }
-
 .kDot {
   width: 10px;
   height: 10px;
@@ -298,7 +349,6 @@ a:hover {
   box-shadow: 0 0 0 6px rgba(138, 255, 214, 0.12);
   animation: pulse 2.4s ease-in-out infinite;
 }
-
 @keyframes pulse {
   0%,
   100% {
@@ -317,13 +367,6 @@ a:hover {
   letter-spacing: -0.03em;
   line-height: 1.03;
 }
-
-@media (max-width: 520px) {
-  .title {
-    font-size: 44px;
-  }
-}
-
 .glowText {
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   -webkit-background-clip: text;
@@ -331,7 +374,6 @@ a:hover {
   color: transparent;
   filter: drop-shadow(0 10px 30px rgba(122, 167, 255, 0.18));
 }
-
 .subtitle {
   margin: 0 0 18px;
   color: var(--muted);
@@ -345,7 +387,6 @@ a:hover {
   gap: 10px;
   flex-wrap: wrap;
 }
-
 .ctaRow {
   margin: 8px 0 14px;
 }
@@ -357,25 +398,17 @@ a:hover {
   gap: 12px;
 }
 
-@media (max-width: 520px) {
-  .heroMeta {
-    grid-template-columns: 1fr;
-  }
-}
-
 .metaCard {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.03);
   border-radius: 18px;
-  padding: 16px 16px;
+  padding: 16px;
   box-shadow: var(--shadow);
 }
-
 .metaNum {
   font-size: 22px;
   font-weight: 800;
 }
-
 .metaLabel {
   color: var(--muted);
   font-size: 13px;
@@ -393,7 +426,6 @@ a:hover {
   box-shadow: var(--shadow);
   overflow: hidden;
 }
-
 .glassHeader {
   display: flex;
   align-items: center;
@@ -401,7 +433,6 @@ a:hover {
   padding: 12px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-
 .dot {
   width: 10px;
   height: 10px;
@@ -417,7 +448,6 @@ a:hover {
 .dot.red {
   background: #ff6f8f;
 }
-
 .glassTitle {
   margin-left: 6px;
   color: var(--muted);
@@ -427,22 +457,18 @@ a:hover {
 .glassBody {
   padding: 14px 14px 16px;
 }
-
 .hl {
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
 }
-
 .hl + .hl {
   margin-top: 10px;
 }
-
 .hlTitle {
   font-weight: 750;
 }
-
 .hlDesc {
   margin-top: 3px;
   color: var(--muted);
@@ -455,7 +481,6 @@ a:hover {
   flex-wrap: wrap;
   gap: 8px;
 }
-
 .chip {
   font-size: 12px;
   padding: 7px 10px;
@@ -466,7 +491,6 @@ a:hover {
   position: relative;
   overflow: hidden;
 }
-
 .chip::after {
   content: "";
   position: absolute;
@@ -485,7 +509,6 @@ a:hover {
   transform: translateX(-30%);
   animation: shimmer 4s ease-in-out infinite;
 }
-
 @keyframes shimmer {
   0%,
   100% {
@@ -502,7 +525,6 @@ a:hover {
   gap: 10px;
   flex-wrap: wrap;
 }
-
 .mini {
   display: inline-flex;
   align-items: center;
@@ -513,12 +535,10 @@ a:hover {
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
 }
-
 .mini:hover {
   text-decoration: none;
   transform: translateY(-1px);
 }
-
 .miniIcon {
   display: grid;
   place-items: center;
@@ -541,26 +561,21 @@ a:hover {
   padding: 26px 0 10px;
   scroll-margin-top: 86px;
 }
-
 .sectionHead {
   margin-bottom: 12px;
 }
-
 .h2 {
   margin: 0 0 6px;
   font-size: 20px;
   letter-spacing: 0.01em;
 }
-
 .h3 {
   margin: 0 0 6px;
   font-size: 16px;
 }
-
 .muted {
   color: var(--muted);
 }
-
 .tiny {
   font-size: 12.5px;
 }
@@ -570,28 +585,19 @@ a:hover {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
-
-@media (max-width: 980px) {
-  .cardsGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .projectCard {
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   box-shadow: var(--shadow);
-  padding: 14px 14px;
+  padding: 14px;
 }
-
 .projectTop {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
 }
-
 .pill {
   font-size: 12px;
   padding: 6px 10px;
@@ -600,11 +606,9 @@ a:hover {
   background: rgba(122, 167, 255, 0.12);
   color: var(--text);
 }
-
 .links {
   margin-top: 10px;
 }
-
 .linkBtn {
   display: inline-flex;
   align-items: center;
@@ -615,7 +619,6 @@ a:hover {
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
 }
-
 .linkBtn:hover {
   text-decoration: none;
   transform: translateY(-1px);
@@ -626,7 +629,6 @@ a:hover {
   display: grid;
   gap: 12px;
 }
-
 .tItem {
   position: relative;
   border-radius: 22px;
@@ -635,7 +637,6 @@ a:hover {
   box-shadow: var(--shadow);
   overflow: hidden;
 }
-
 .tLine {
   position: absolute;
   left: 0;
@@ -649,20 +650,16 @@ a:hover {
   );
   opacity: 0.75;
 }
-
 .tContent {
   padding: 14px 14px 14px 16px;
 }
-
 .space {
   justify-content: space-between;
 }
-
 .list {
   margin: 8px 0 0 18px;
   color: var(--muted);
 }
-
 .list li {
   margin: 6px 0;
 }
@@ -673,19 +670,12 @@ a:hover {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
-
-@media (max-width: 980px) {
-  .skillGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .skillCard {
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   box-shadow: var(--shadow);
-  padding: 14px 14px;
+  padding: 14px;
 }
 
 /* contact */
@@ -698,14 +688,12 @@ a:hover {
     rgba(138, 255, 214, 0.06)
   );
   box-shadow: var(--shadow);
-  padding: 16px 16px;
+  padding: 16px;
 }
-
 .contactTitle {
   font-weight: 800;
   font-size: 16px;
 }
-
 .contactBtns {
   margin-top: 12px;
   gap: 10px;
@@ -722,7 +710,6 @@ a:hover {
   color: var(--muted);
   font-size: 13px;
 }
-
 .sep {
   opacity: 0.6;
 }
@@ -733,7 +720,6 @@ a:hover {
   transform: translateY(14px);
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
-
 [data-reveal].in {
   opacity: 1;
   transform: translateY(0);
@@ -744,11 +730,98 @@ a:hover {
   transition: transform 0.22s ease, border-color 0.22s ease,
     background 0.22s ease;
 }
-
 .hoverLift:hover {
   transform: translateY(-3px);
   border-color: rgba(122, 167, 255, 0.26);
   background: rgba(255, 255, 255, 0.05);
+}
+
+/* ------------------------- */
+/* ✅ RESPONSIVE FIXES        */
+/* ------------------------- */
+
+@media (max-width: 980px) {
+  /* Hide desktop links/ctas and show hamburger */
+  .navLinks {
+    display: none;
+  }
+  .navCtas {
+    display: none;
+  }
+  .menuBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero {
+    min-height: auto;
+    align-items: stretch;
+  }
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+  .skillGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --container-pad: 14px;
+  }
+
+  .title {
+    font-size: 40px;
+    line-height: 1.06;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .kicker {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Make CTA buttons look nice on phone */
+  .ctaRow {
+    gap: 10px;
+  }
+  .ctaRow .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  /* Cards spacing + readable */
+  .metaCard {
+    padding: 14px;
+  }
+  .glassBody {
+    padding: 12px;
+  }
+  .hlDesc {
+    font-size: 12.8px;
+  }
+
+  /* Chips wrap better */
+  .chip {
+    font-size: 11.5px;
+    padding: 6px 9px;
+  }
+
+  /* Pull blobs in so they don't create right-gap on very small screens */
+  .b1 {
+    left: -260px;
+  }
+  .b2 {
+    right: -220px;
+  }
 }
 
 /* reduced motion */
