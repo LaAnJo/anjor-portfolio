@@ -36,6 +36,7 @@ export default function App() {
     []
   );
 
+  // ✅ Projects (Live Demo removed)
   const projects = useMemo(
     () => [
       {
@@ -44,7 +45,6 @@ export default function App() {
         desc: "Built a Python MCP server that exposes factory KPI tools over TimescaleDB aggregates. Designed clean tool contracts and efficient SQL queries for reliable KPI computation.",
         tags: ["Python", "PostgreSQL", "TimescaleDB", "Docker", "MCP"],
         github: "https://github.com/LaAnJo",
-        demo: "",
       },
       {
         icon: "📄",
@@ -52,7 +52,6 @@ export default function App() {
         desc: "Built evaluation utilities to assess response stability and quality signals. Added FastAPI endpoints for experiments and tracking, focusing on repeatable metrics and monitoring.",
         tags: ["Python", "FastAPI", "Evaluation", "LLMs"],
         github: "https://github.com/LaAnJo",
-        demo: "",
       },
       {
         icon: "📊",
@@ -60,7 +59,6 @@ export default function App() {
         desc: "Created SQL/Python pipelines and Power BI dashboards for operational KPI monitoring. Built tracking views and automated reporting workflows for stakeholders.",
         tags: ["SQL", "Python", "Power BI", "Analytics"],
         github: "https://github.com/LaAnJo",
-        demo: "",
       },
     ],
     []
@@ -92,15 +90,15 @@ export default function App() {
     []
   );
 
-  // ✅ Education cards like screenshot
-  const educationCards = useMemo(
+  const education = useMemo(
     () => [
       {
-        date: "Aug 2024 – Aug 2026 (Expected)",
-        badge: "GPA: 3.7/4.0",
-        title: "M.S. in Data Science",
+        shell: "$ education --detail",
+        degree: "M.S. in Data Science",
         school: "University of Wisconsin–Milwaukee, Milwaukee, WI",
-        courses: [
+        date: "Aug 2024 – Aug 2026 (Expected)",
+        score: "GPA: 3.7/4.0",
+        coursework: [
           "Machine Learning",
           "Data Mining",
           "Database Management",
@@ -112,11 +110,12 @@ export default function App() {
         ],
       },
       {
-        date: "Jun 2018 – Jun 2022",
-        badge: "GPA: 3.52/4.0",
-        title: "B.Tech in Computer Science Engineering",
+        shell: "$ education --detail",
+        degree: "B.Tech in Computer Science Engineering",
         school: "Lovely Professional University, Punjab, India",
-        courses: [
+        date: "Jun 2018 – Jun 2022",
+        score: "GPA: 3.52/4.0",
+        coursework: [
           "Data Structures",
           "Algorithms",
           "DBMS",
@@ -196,20 +195,6 @@ export default function App() {
   };
 
   const toggleNav = () => document.body.classList.toggle("navOpen");
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // Simple mailto submission (no backend needed)
-    const form = new FormData(e.currentTarget);
-    const name = form.get("name")?.toString() ?? "";
-    const email = form.get("email")?.toString() ?? "";
-    const message = form.get("message")?.toString() ?? "";
-    const subject = encodeURIComponent(`Portfolio message from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\n${message}`
-    );
-    window.location.href = `mailto:lataneanjor6@gmail.com?subject=${subject}&body=${body}`;
-  };
 
   return (
     <div className="app">
@@ -373,19 +358,8 @@ export default function App() {
                   ))}
                 </div>
 
+                {/* ✅ ONLY GitHub button */}
                 <div className="pActions">
-                  {p.demo ? (
-                    <a
-                      className="pBtn"
-                      href={p.demo}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Live Demo
-                    </a>
-                  ) : (
-                    <span className="pBtnGhost">Live Demo</span>
-                  )}
                   <a
                     className="pBtnPrimary"
                     href={p.github}
@@ -404,7 +378,7 @@ export default function App() {
       {/* EXPERIENCE */}
       <section id="experience" className="experienceSection">
         <div className="container">
-          <h2 className="experienceTitle">Professional Experience</h2>
+          <h2 className="experienceTitleBlack">Professional Experience</h2>
 
           <div className="experienceStack">
             {experience.map((x) => (
@@ -448,33 +422,29 @@ export default function App() {
         </div>
       </section>
 
-      {/* ✅ EDUCATION like screenshot */}
-      <section id="education" className="eduSection">
+      {/* EDUCATION */}
+      <section id="education" className="educationSection">
         <div className="container">
-          <h2 className="eduTitle">Education</h2>
+          <h2 className="educationTitleBlack">Education</h2>
 
           <div className="eduStack">
-            {educationCards.map((e) => (
-              <article key={e.title} className="eduCard">
-                <div className="eduTopLine">$ education --detail</div>
-
-                <div className="eduHeader">
-                  <div className="eduLeft">
-                    <h3 className="eduDegree">{e.title}</h3>
-                    <div className="eduSchool">{e.school}</div>
-                  </div>
-
+            {education.map((e) => (
+              <article key={e.degree} className="eduCard">
+                <div className="eduTop">
+                  <div className="eduShell">{e.shell}</div>
                   <div className="eduRight">
                     <div className="eduDate">{e.date}</div>
-                    <div className="eduBadge">{e.badge}</div>
+                    <div className="eduScore">{e.score}</div>
                   </div>
                 </div>
 
-                <div className="eduSub">Relevant coursework</div>
+                <div className="eduDegree">{e.degree}</div>
+                <div className="eduSchool">{e.school}</div>
 
-                <div className="eduChips">
-                  {e.courses.map((c) => (
-                    <span key={c} className="eduChip">
+                <div className="eduLabel">Relevant coursework</div>
+                <div className="eduTags">
+                  {e.coursework.map((c) => (
+                    <span key={c} className="eduTag">
                       {c}
                     </span>
                   ))}
@@ -485,130 +455,63 @@ export default function App() {
         </div>
       </section>
 
-      {/* ✅ CONTACT like screenshot */}
+      {/* CONTACT */}
       <section id="contact" className="contactSection">
         <div className="container">
           <h2 className="contactTitle">Contact Me</h2>
 
           <div className="contactIconsRow">
             <a
-              className="cIconCard"
+              className="contactIconCard"
               href="mailto:lataneanjor6@gmail.com"
               aria-label="Email"
             >
-              <div className="cIcon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4 6h16v12H4V6Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    opacity="0.9"
-                  />
-                  <path
-                    d="M4 7l8 6 8-6"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <div className="cIconText">lataneanjor6@gmail.com</div>
+              ✉<div className="contactIconText">lataneanjor6@gmail.com</div>
             </a>
 
             <a
-              className="cIconCard"
+              className="contactIconCard"
               href="https://github.com/LaAnJo"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
             >
-              <div className="cIcon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M12 2c5.52 0 10 4.48 10 10 0 4.42-2.87 8.17-6.84 9.49-.5.09-.68-.22-.68-.48v-1.7c0-.58-.2-.96-.43-1.16 1.4-.16 2.88-.69 2.88-3.12 0-.69-.25-1.25-.65-1.69.06-.16.28-.8-.06-1.67 0 0-.53-.17-1.73.65-.5-.14-1.03-.2-1.56-.2s-1.06.07-1.56.2c-1.2-.82-1.73-.65-1.73-.65-.34.87-.12 1.51-.06 1.67-.4.44-.65 1-.65 1.69 0 2.42 1.47 2.96 2.87 3.12-.18.16-.35.44-.4.84-.36.16-1.28.44-1.85-.52 0 0-.34-.62-.98-.66 0 0-.62-.01-.04.39 0 0 .42.2.71.95 0 0 .38 1.18 2.13.83v1.52c0 .26-.18.57-.68.48A10 10 0 0 1 2 12C2 6.48 6.48 2 12 2Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                </svg>
-              </div>
-              <div className="cIconText">github</div>
+              <span className="ghDot">⌂</span>
+              <div className="contactIconText">github</div>
             </a>
 
             <a
-              className="cIconCard"
+              className="contactIconCard"
               href="https://linkedin.com/in/anjorlatne"
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
             >
-              <div className="cIcon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6.5 6.8A1.8 1.8 0 1 0 6.5 3.2a1.8 1.8 0 0 0 0 3.6Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                  <path d="M5 21V9h3v12H5Z" fill="currentColor" opacity="0.9" />
-                  <path
-                    d="M10 21V9h3v1.6c.4-.9 1.6-1.9 3.4-1.9 3.1 0 3.6 2 3.6 4.6V21h-3v-6.2c0-1.5 0-3-1.8-3s-2.1 1.4-2.1 2.9V21h-3Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                </svg>
-              </div>
-              <div className="cIconText">linkedin</div>
+              in
+              <div className="contactIconText">linkedin</div>
             </a>
           </div>
 
-          <form className="contactForm" onSubmit={onSubmit}>
-            <div className="contactRow2">
-              <input
-                className="cInput"
-                name="name"
-                placeholder="Name"
-                required
-              />
-              <input
-                className="cInput"
-                name="email"
-                placeholder="Email"
-                type="email"
-                required
-              />
+          <form
+            className="contactForm"
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert(
+                "Thanks! Message form is UI-only (connect EmailJS/Formspree if you want)."
+              );
+            }}
+          >
+            <div className="contactFormRow">
+              <input className="input" placeholder="Name" />
+              <input className="input" placeholder="Email" />
             </div>
-
-            <textarea
-              className="cTextarea"
-              name="message"
-              placeholder="Message..."
-              rows={5}
-              required
-            />
-
+            <textarea className="textarea" placeholder="Message..." rows={6} />
             <button className="sendBtn" type="submit">
               Send Message
             </button>
           </form>
 
-          <footer className="footer footerTight">
+          <footer className="footer">
             <div className="muted small">
               © {new Date().getFullYear()} Anjor Latane
             </div>

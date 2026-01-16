@@ -14,12 +14,14 @@
   --skillGreen: #22c55e;
   --skillTrack: #9aa0a6;
 
-  --expTitle: rgba(47, 111, 255, 0.35);
-  --expCardA: #121826;
-  --expCardB: #212b3d;
+  /* Experience */
+  --expCardA: rgba(20, 28, 44, 0.96);
+  --expCardB: rgba(38, 50, 74, 0.96);
 
-  --purpleGlow: rgba(124, 58, 237, 0.78);
-  --yellowGlow: rgba(250, 204, 21, 0.85);
+  /* OUTER glows (lighter shades requested) */
+  --mintGlow: rgba(167, 243, 208, 0.52); /* ✅ light mint */
+  --maroonGlow: rgba(209, 143, 143, 0.45); /* ✅ lighter maroon */
+  --yellowGlow: rgba(253, 230, 138, 0.42);
 }
 
 * {
@@ -54,7 +56,7 @@ button {
   margin: 0 auto;
 }
 
-/* ===== Topbar ===== */
+/* Topbar */
 .topbar {
   position: sticky;
   top: 0;
@@ -63,6 +65,7 @@ button {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
+
 .topbarInner {
   width: min(var(--container), calc(100% - 44px));
   margin: 0 auto;
@@ -72,6 +75,7 @@ button {
   justify-content: space-between;
   gap: 14px;
 }
+
 .brand {
   border: 0;
   background: transparent;
@@ -88,6 +92,7 @@ button {
   border: 1px solid var(--line);
   background: #fff;
 }
+
 .nav {
   display: flex;
   gap: 16px;
@@ -101,13 +106,14 @@ button {
   color: rgba(11, 15, 20, 0.78);
   padding: 8px 12px;
   border-radius: 10px;
-  transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+  transition: background 120ms ease, color 120ms ease;
 }
 .navLink.active {
   color: #fff;
   background: #2f6fff;
   font-weight: 900;
 }
+
 .topbarRight {
   display: flex;
   align-items: center;
@@ -179,46 +185,7 @@ body.navOpen .mobileNav {
   display: block;
 }
 
-/* ===== Generic ===== */
-.section {
-  padding: 88px 0;
-  scroll-margin-top: 92px;
-}
-.sectionHead {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-.h2 {
-  font-size: 30px;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-.h3 {
-  font-size: 18px;
-  margin: 0 0 10px;
-  letter-spacing: -0.01em;
-}
-.p {
-  margin: 0 0 10px;
-  line-height: 1.65;
-}
-.muted {
-  color: var(--muted);
-}
-.small {
-  font-size: 13px;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 18px;
-}
-
-/* ===== Home ===== */
+/* Home */
 .homeHero {
   min-height: calc(100vh - 72px);
   display: grid;
@@ -274,7 +241,7 @@ body.navOpen .mobileNav {
   place-items: center;
 }
 
-/* ===== About ===== */
+/* About */
 .aboutSection {
   padding: 92px 0 60px;
   scroll-margin-top: 92px;
@@ -307,7 +274,7 @@ body.navOpen .mobileNav {
   margin-top: 46px;
 }
 
-/* ===== Skills ===== */
+/* Skills */
 .skillsSection {
   background: #efefef;
   padding: 92px 0;
@@ -347,7 +314,7 @@ body.navOpen .mobileNav {
   background: var(--skillGreen);
 }
 
-/* ===== Projects ===== */
+/* Projects */
 .projectsSection {
   padding: 92px 0;
   background: #ffffff;
@@ -360,11 +327,13 @@ body.navOpen .mobileNav {
   letter-spacing: -0.03em;
   margin: 0 0 44px;
 }
+
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
+
 .pCard {
   position: relative;
   background: #fff;
@@ -373,45 +342,14 @@ body.navOpen .mobileNav {
   box-shadow: 0 14px 40px rgba(2, 6, 23, 0.08);
   padding: 26px;
   transition: transform 180ms ease, box-shadow 180ms ease;
-  overflow: hidden;
+  overflow: visible; /* ✅ allow outer glow */
 }
-.pCard::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 24px;
-  background: radial-gradient(
-      600px 120px at 20% 0%,
-      rgba(124, 58, 237, 0.55),
-      transparent 60%
-    ),
-    radial-gradient(
-      600px 120px at 80% 100%,
-      rgba(168, 85, 247, 0.55),
-      transparent 60%
-    );
-  opacity: 0;
-  transition: opacity 180ms ease;
-  pointer-events: none;
-}
-.pCard::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  background: #fff;
-  pointer-events: none;
-}
-.pCard > * {
-  position: relative;
-  z-index: 1;
-}
+
+/* ✅ OUTER light mint glow (no inside tint) */
 .pCard:hover {
   transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.14);
-}
-.pCard:hover::before {
-  opacity: 1;
+  box-shadow: 0 28px 90px rgba(2, 6, 23, 0.14),
+    0 0 0 1px rgba(16, 185, 129, 0.16), 0 18px 70px var(--mintGlow);
 }
 
 .pTop {
@@ -421,6 +359,7 @@ body.navOpen .mobileNav {
   align-items: center;
   margin-bottom: 12px;
 }
+
 .pIcon {
   width: 54px;
   height: 54px;
@@ -431,24 +370,28 @@ body.navOpen .mobileNav {
   border: 1px solid rgba(2, 6, 23, 0.06);
   font-size: 24px;
 }
+
 .pTitle {
   margin: 0;
   font-size: 24px;
   font-weight: 900;
   letter-spacing: -0.02em;
 }
+
 .pDesc {
   margin: 10px 0 18px;
   color: rgba(11, 15, 20, 0.7);
   line-height: 1.8;
   font-size: 15.5px;
 }
+
 .pTags {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 18px;
 }
+
 .pTag {
   display: inline-flex;
   align-items: center;
@@ -460,14 +403,14 @@ body.navOpen .mobileNav {
   font-weight: 800;
   font-size: 12px;
 }
+
+/* ✅ only GitHub button */
 .pActions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
-.pBtn,
-.pBtnPrimary,
-.pBtnGhost {
+.pBtnPrimary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -475,87 +418,59 @@ body.navOpen .mobileNav {
   border-radius: 12px;
   font-weight: 900;
   font-size: 13px;
-  border: 1px solid rgba(2, 6, 23, 0.14);
-  background: #fff;
-}
-.pBtnPrimary {
   border: 1px solid rgba(34, 197, 94, 0.55);
   color: rgba(21, 128, 61, 1);
-}
-.pBtnGhost {
-  opacity: 0.45;
+  background: #fff;
 }
 
-/* ===== Experience ===== */
+/* Experience */
 .experienceSection {
   padding: 92px 0;
   background: radial-gradient(
       1200px 500px at 10% 0%,
-      rgba(47, 111, 255, 0.08),
+      rgba(47, 111, 255, 0.06),
       transparent 60%
     ),
     radial-gradient(
       1000px 500px at 90% 20%,
-      rgba(124, 58, 237, 0.08),
+      rgba(16, 185, 129, 0.06),
       transparent 60%
     ),
     #eef3fb;
   scroll-margin-top: 92px;
 }
-.experienceTitle {
+.experienceTitleBlack {
   font-size: 58px;
   font-weight: 900;
   letter-spacing: -0.03em;
   margin: 0 0 28px;
-  color: var(--expTitle);
+  color: #0b0f14;
 }
+
 .experienceStack {
   display: grid;
   gap: 26px;
 }
+
 .expCard {
   position: relative;
   display: grid;
   grid-template-columns: 92px 1fr;
   gap: 18px;
-  padding: 28px;
+  padding: 30px;
   border-radius: 22px;
-  background: linear-gradient(
-    135deg,
-    rgba(18, 24, 38, 0.96),
-    rgba(33, 43, 61, 0.96)
-  );
+  background: linear-gradient(135deg, var(--expCardA), var(--expCardB));
   box-shadow: 0 18px 60px rgba(2, 6, 23, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.92);
   transition: transform 180ms ease, box-shadow 180ms ease;
-  overflow: hidden;
+  overflow: visible; /* ✅ outer glow */
 }
-.expCard::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 24px;
-  background: radial-gradient(
-      700px 160px at 20% 0%,
-      rgba(250, 204, 21, 0.45),
-      transparent 60%
-    ),
-    radial-gradient(
-      700px 160px at 80% 100%,
-      rgba(253, 230, 138, 0.45),
-      transparent 60%
-    );
-  opacity: 0;
-  transition: opacity 180ms ease;
-  pointer-events: none;
-}
+
+/* ✅ OUTER lighter yellow glow */
 .expCard:hover {
   transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 28px 90px rgba(2, 6, 23, 0.22);
-}
-.expCard:hover::before {
-  opacity: 1;
+  box-shadow: 0 28px 90px rgba(2, 6, 23, 0.22), 0 18px 80px var(--yellowGlow);
 }
 
 .expIcon {
@@ -568,13 +483,10 @@ body.navOpen .mobileNav {
   border: 2px solid rgba(124, 58, 237, 0.4);
   color: rgba(197, 165, 255, 1);
   margin-top: 6px;
-  position: relative;
-  z-index: 1;
 }
+
 .expContent {
   min-width: 0;
-  position: relative;
-  z-index: 1;
 }
 .expMeta {
   display: flex;
@@ -619,19 +531,20 @@ body.navOpen .mobileNav {
   margin: 0 0 10px;
 }
 
-/* ===== Education (like screenshot 2) ===== */
-.eduSection {
+/* ✅ Education styled like screenshot */
+.educationSection {
   padding: 92px 0;
   background: #ffffff;
   scroll-margin-top: 92px;
 }
-.eduTitle {
+.educationTitleBlack {
   font-size: 58px;
   font-weight: 900;
   letter-spacing: -0.03em;
   margin: 0 0 28px;
-  color: rgba(15, 23, 42, 0.75);
+  color: #0b0f14;
 }
+
 .eduStack {
   display: grid;
   gap: 22px;
@@ -640,122 +553,97 @@ body.navOpen .mobileNav {
 .eduCard {
   position: relative;
   border-radius: 18px;
-  border: 1px solid rgba(2, 6, 23, 0.1);
   background: #fff;
-  padding: 22px 22px 20px;
-  box-shadow: 0 18px 45px rgba(2, 6, 23, 0.08);
+  border: 1px solid rgba(2, 6, 23, 0.1);
+  box-shadow: 0 14px 44px rgba(2, 6, 23, 0.08);
+  padding: 22px 22px 18px;
   transition: transform 180ms ease, box-shadow 180ms ease;
-  overflow: hidden;
+  overflow: visible; /* ✅ outer glow */
 }
 
-.eduCard::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 20px;
-  background: radial-gradient(
-      650px 160px at 20% 0%,
-      rgba(124, 58, 237, 0.4),
-      transparent 60%
-    ),
-    radial-gradient(
-      650px 160px at 80% 100%,
-      rgba(168, 85, 247, 0.38),
-      transparent 60%
-    );
-  opacity: 0;
-  transition: opacity 180ms ease;
-  pointer-events: none;
-}
+/* ✅ OUTER lighter maroon glow */
 .eduCard:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 26px 70px rgba(2, 6, 23, 0.14);
-}
-.eduCard:hover::before {
-  opacity: 1;
+  transform: translateY(-5px);
+  box-shadow: 0 24px 70px rgba(2, 6, 23, 0.12), 0 18px 78px var(--maroonGlow);
 }
 
-.eduTopLine {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", monospace;
-  color: rgba(11, 15, 20, 0.55);
-  margin-bottom: 10px;
-}
-
-.eduHeader {
+.eduTop {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
+}
+
+.eduShell {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  color: rgba(11, 15, 20, 0.55);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.eduRight {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+.eduDate {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  color: rgba(11, 15, 20, 0.55);
+  font-size: 14px;
+}
+
+.eduScore {
+  font-weight: 900;
+  color: #2f6fff;
+  background: rgba(47, 111, 255, 0.12);
+  border: 1px solid rgba(47, 111, 255, 0.25);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 13px;
 }
 
 .eduDegree {
-  margin: 0;
   font-size: 22px;
   font-weight: 900;
+  margin: 0 0 6px;
   letter-spacing: -0.02em;
 }
 
 .eduSchool {
-  margin-top: 8px;
-  color: rgba(11, 15, 20, 0.65);
-  font-size: 15px;
-  line-height: 1.5;
+  color: rgba(11, 15, 20, 0.7);
+  margin-bottom: 14px;
 }
 
-.eduRight {
-  text-align: right;
-  min-width: 220px;
-}
-
-.eduDate {
-  color: rgba(11, 15, 20, 0.55);
+.eduLabel {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", monospace;
-}
-
-.eduBadge {
-  display: inline-flex;
-  margin-top: 10px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: rgba(47, 111, 255, 0.1);
-  border: 1px solid rgba(47, 111, 255, 0.2);
-  color: rgba(47, 111, 255, 1);
+  color: #2f6fff;
   font-weight: 900;
-  font-size: 13px;
+  margin: 10px 0 10px;
+  font-size: 14px;
 }
 
-.eduSub {
-  margin-top: 18px;
-  color: rgba(47, 111, 255, 1);
-  font-weight: 900;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", monospace;
-}
-
-.eduChips {
+.eduTags {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 12px;
 }
 
-.eduChip {
-  display: inline-flex;
-  align-items: center;
+.eduTag {
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid rgba(2, 6, 23, 0.12);
   background: #fff;
   font-weight: 800;
   font-size: 13px;
-  color: rgba(11, 15, 20, 0.78);
 }
 
-/* ===== Contact like screenshot 1 ===== */
+/* Contact */
 .contactSection {
-  padding: 92px 0 70px;
+  padding: 92px 0;
   background: #efefef;
   scroll-margin-top: 92px;
 }
@@ -764,116 +652,105 @@ body.navOpen .mobileNav {
   font-size: 54px;
   font-weight: 900;
   letter-spacing: -0.03em;
-  margin: 0 0 34px;
+  margin: 0 0 30px;
 }
 
 .contactIconsRow {
-  display: flex;
-  justify-content: center;
-  gap: 70px;
-  align-items: flex-start;
-  margin: 18px 0 34px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 980px;
+  margin: 0 auto 26px;
 }
-
-.cIconCard {
+.contactIconCard {
+  background: transparent;
+  border: 0;
   display: grid;
   justify-items: center;
   gap: 12px;
-  width: 210px;
-  padding: 10px 10px 0;
+  padding: 14px 10px;
+  border-radius: 14px;
+  transition: transform 160ms ease;
+  cursor: pointer;
+  font-size: 34px;
 }
-
-.cIcon {
-  width: 58px;
-  height: 58px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(2, 6, 23, 0.14);
-  display: grid;
-  place-items: center;
-  color: rgba(11, 15, 20, 0.92);
-  transition: transform 160ms ease, box-shadow 160ms ease;
-  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
+.contactIconCard:hover {
+  transform: translateY(-4px) scale(1.05);
 }
-
-.cIconCard:hover .cIcon {
-  transform: translateY(-4px) scale(1.08);
-  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.14);
-}
-
-.cIconText {
-  color: rgba(11, 15, 20, 0.7);
-  font-weight: 800;
+.contactIconText {
   font-size: 14px;
-  text-align: center;
+  font-weight: 800;
+  color: rgba(11, 15, 20, 0.7);
+}
+.ghDot {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 2px solid rgba(11, 15, 20, 0.85);
+  font-size: 18px;
 }
 
 .contactForm {
-  width: min(860px, 100%);
+  max-width: 980px;
   margin: 0 auto;
   display: grid;
   gap: 18px;
 }
-
-.contactRow2 {
+.contactFormRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
-
-.cInput,
-.cTextarea {
+.input,
+.textarea {
   width: 100%;
+  border: 1px solid rgba(2, 6, 23, 0.1);
   border-radius: 10px;
-  border: 1px solid rgba(2, 6, 23, 0.14);
-  background: #fff;
   padding: 14px 14px;
-  font-size: 15px;
+  font-size: 16px;
   outline: none;
+  background: #fff;
 }
-
-.cTextarea {
+.textarea {
   resize: vertical;
-  min-height: 150px;
-}
-
-.cInput:focus,
-.cTextarea:focus {
-  border-color: rgba(124, 58, 237, 0.4);
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
 }
 
 .sendBtn {
-  width: 180px;
   justify-self: center;
-  padding: 12px 16px;
+  padding: 12px 24px;
   border-radius: 10px;
+  border: 0;
   background: #0b0f14;
   color: #fff;
-  border: 0;
   font-weight: 900;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-.sendBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.18);
 }
 
 .footer {
-  margin-top: 26px;
+  margin-top: 22px;
   display: flex;
   justify-content: center;
   padding-top: 14px;
-  border-top: 1px solid rgba(2, 6, 23, 0.12);
+  border-top: 1px solid rgba(2, 6, 23, 0.1);
 }
-.footerTight {
-  margin-top: 22px;
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 13px;
 }
 
-/* ===== Responsive ===== */
+/* Responsive */
 @media (max-width: 980px) {
+  .projectsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .skillsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .nav {
     display: none;
   }
@@ -886,13 +763,6 @@ body.navOpen .mobileNav {
     display: none;
   }
 
-  .projectsGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .skillsGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .expCard {
     grid-template-columns: 1fr;
   }
@@ -900,12 +770,11 @@ body.navOpen .mobileNav {
     margin-top: 0;
   }
 
-  .eduHeader {
-    flex-direction: column;
+  .contactIconsRow {
+    grid-template-columns: 1fr;
   }
-  .eduRight {
-    text-align: left;
-    min-width: 0;
+  .contactFormRow {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -930,17 +799,15 @@ body.navOpen .mobileNav {
   .projectsTitle {
     font-size: 40px;
   }
-  .experienceTitle {
-    font-size: 40px;
-  }
-  .eduTitle {
-    font-size: 40px;
-  }
-  .contactTitle {
+  .experienceTitleBlack,
+  .educationTitleBlack {
     font-size: 40px;
   }
 
-  .contactRow2 {
-    grid-template-columns: 1fr;
+  .expRole {
+    font-size: 24px;
+  }
+  .homeLine {
+    font-size: 18px;
   }
 }
